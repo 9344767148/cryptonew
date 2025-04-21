@@ -1,0 +1,28 @@
+-- Hackathon Submission: Cryptocurrency Management
+
+-- Users Table
+CREATE TABLE Users (
+  user_id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Wallets Table
+CREATE TABLE Wallets (
+  wallet_id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT,
+  currency VARCHAR(50),
+  balance DECIMAL(20,8),
+  FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+-- Transactions Table
+CREATE TABLE Transactions (
+  transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+  wallet_id INT,
+  type ENUM('buy', 'sell', 'transfer'),
+  amount DECIMAL(20,8),
+  transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (wallet_id) REFERENCES Wallets(wallet_id)
+);
